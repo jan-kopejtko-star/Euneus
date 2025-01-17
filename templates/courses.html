@@ -17,21 +17,14 @@
 
         <main>
             <section class="section">
-                <h2 class="section-title">Welcome to Ethical Hacking</h2>
+                <h2 class="section-title">Available Courses</h2>
+                {% for course in courses %}
                 <div class="pixel-box">
-                    <p>Master the art of ethical hacking through hands-on training and real-world scenarios. Our platform provides a safe environment to develop and test your cybersecurity skills.</p>
+                    <p>{{ course.name }}</p>
+                    <p>Difficulty: {{ course.difficulty }}</p>
+                    <button class="pixel-button">Start Course</button>
                 </div>
-                <button class="pixel-button">Start Training</button>
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">Featured Labs</h2>
-                <div class="pixel-box">
-                    <p>• Network Penetration Testing</p>
-                    <p>• Web Application Security</p>
-                    <p>• Wireless Network Hacking</p>
-                    <p>• Social Engineering</p>
-                </div>
+                {% endfor %}
             </section>
         </main>
 
