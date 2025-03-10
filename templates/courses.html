@@ -2,29 +2,58 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>EUNEUS TRAINING - Courses</title>
 </head>
 <body>
     <div class="container">
         <header class="header">
             <h1 class="title">EUNEUS TRAINING</h1>
             <nav class="nav">
+                <a href="{{ url_for('home') }}" class="nav-link">Home</a>
                 <a href="{{ url_for('courses') }}" class="nav-link">Courses</a>
                 <a href="{{ url_for('labs') }}" class="nav-link">Labs</a>
                 <a href="{{ url_for('tools') }}" class="nav-link">Tools</a>
+                {% if 'user_id' in session %}
                 <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+                {% else %}
+                <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                {% endif %}
             </nav>
         </header>
 
         <main>
             <section class="section">
                 <h2 class="section-title">Available Courses</h2>
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="pixel-box flash-{{ category }}">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
                 {% for course in courses %}
                 <div class="pixel-box">
-                    <p>{{ course.name }}</p>
+                    <h3>{{ course.name }}</h3>
                     <p>Difficulty: {{ course.difficulty }}</p>
-                    <button class="pixel-button">Start Course</button>
+                    <a href="#" class="pixel-button">Start Course</a>
+                    
+                    {% if 'user_id' not in session and loop.index > 3 %}
+                    <p class="small-text">Premium content - Login to access</p>
+                    {% endif %}
                 </div>
                 {% endfor %}
+                
+                {% if 'user_id' not in session %}
+                <div class="pixel-box flash-info">
+                    <p>Sign in to access premium courses and track your progress!</p>
+                    <a href="{{ url_for('login') }}" class="pixel-button">Login</a>
+                    <a href="{{ url_for('register') }}" class="pixel-button">Register</a>
+                </div>
+                {% endif %}
             </section>
         </main>
 
@@ -34,4 +63,3 @@
     </div>
 </body>
 </html>
-

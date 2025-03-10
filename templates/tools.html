@@ -2,7 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>EUNEUS TRAINING - Home</title>
+    <title>EUNEUS TRAINING - Tools</title>
 </head>
 <body>
     <div class="container">
@@ -23,7 +23,7 @@
 
         <main>
             <section class="section">
-                <h2 class="section-title">Welcome to Ethical Hacking</h2>
+                <h2 class="section-title">Ethical Hacking Tools</h2>
                 
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
@@ -35,29 +35,13 @@
                     {% endif %}
                 {% endwith %}
                 
+                {% for tool in tools %}
                 <div class="pixel-box">
-                    <p>Master the art of ethical hacking through hands-on training and real-world scenarios. Our platform provides a safe environment to develop and test your cybersecurity skills.</p>
+                    <h3>{{ tool.name }}</h3>
+                    <p>{{ tool.description }}</p>
+                    <a href="#" class="pixel-button">Use Tool</a>
                 </div>
-                
-                {% if 'user_id' in session %}
-                <a href="{{ url_for('courses') }}" class="pixel-button">Start Training</a>
-                {% else %}
-                <a href="{{ url_for('login') }}" class="pixel-button">Sign In to Start Training</a>
-                {% endif %}
-            </section>
-
-            <section class="section">
-                <h2 class="section-title">Featured Labs</h2>
-                <div class="pixel-box">
-                    <p>• Network Penetration Testing</p>
-                    <p>• Web Application Security</p>
-                    <p>• Wireless Network Hacking</p>
-                    <p>• Social Engineering</p>
-                    
-                    {% if 'user_id' not in session %}
-                    <p class="small-text">Sign in to access all labs</p>
-                    {% endif %}
-                </div>
+                {% endfor %}
             </section>
         </main>
 
