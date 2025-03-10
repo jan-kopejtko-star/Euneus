@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>EUNEUS TRAINING - Update Profile</title>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">EUNEUS TRAINING</h1>
+            <nav class="nav">
+                <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('courses') }}" class="nav-link">Courses</a>
+                <a href="{{ url_for('labs') }}" class="nav-link">Labs</a>
+                <a href="{{ url_for('tools') }}" class="nav-link">Tools</a>
+                <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="section">
+                <h2 class="section-title">Update Your Profile</h2>
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="pixel-box flash-{{ category }}">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                <div class="pixel-box">
+                    <form method="POST" action="{{ url_for('update_profile') }}">
+                        <div class="form-group">
+                            <label for="username">Username:</label><br>
+                            <input type="text" id="username" value="{{ user.username }}" disabled class="pixel-input">
+                            <p class="small-text">Username cannot be changed</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email:</label><br>
+                            <input type="email" id="email" name="email" value="{{ user.email }}" class="pixel-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <h3>Change Password</h3>
+                            <label for="current_password">Current Password:</label><br>
+                            <input type="password" id="current_password" name="current_password" class="pixel-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new_password">New Password:</label><br>
+                            <input type="password" id="new_password" name="new_password" class="pixel-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm_new_password">Confirm New Password:</label><br>
+                            <input type="password" id="confirm_new_password" name="confirm_new_password" class="pixel-input">
+                        </div>
+                        
+                        <button type="submit" class="pixel-button">Update Profile</button>
+                        <a href="{{ url_for('profile') }}" class="pixel-button">Cancel</a>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>© 2025 EUNEUS - SECURE YOUR FUTURE</p>
+        </footer>
+    </div>
+</body>
+</html>
